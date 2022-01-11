@@ -54,15 +54,24 @@ public class App extends Application {
 
         snake = new Snake();
         gameLoop = new GameLoop();
+        gameLoop.timeLine.stop();
 
         //Menu scene:
         Label label = new Label("Welcome to our Version of Snake");
         Button startGame = new Button("Start the Game");
         Button showHighScore = new Button("Show High-score");
 
-        startGame.setOnAction(e -> primaryStage.setScene(sceneGame));
+        startGame.setOnAction(event -> {
+            gameLoop.timeLine.play();
+            primaryStage.setScene(sceneGame);
+        });
+        
         Button gameOver = new Button("Test GameOver");
-        gameOver.setOnAction(e -> primaryStage.setScene(sceneGameOver));
+        gameOver.setOnAction(e -> {
+            gameLoop.timeLine.stop();   
+            primaryStage.setScene(sceneGameOver);
+            
+            });
 
         VBox layoutMenu = new VBox();
         layoutMenu.getChildren().addAll(label, startGame,showHighScore, gameOver);
@@ -70,7 +79,10 @@ public class App extends Application {
 
         //GameOver Scene:
         Button playAgain = new Button("Play again");
-        playAgain.setOnAction(e -> primaryStage.setScene(sceneGame));
+        playAgain.setOnAction(e -> {
+            gameLoop.timeLine.play();
+            primaryStage.setScene(sceneGame);
+            });
         Button backToMenu = new Button("Back to Menu");
         backToMenu.setOnAction(e -> primaryStage.setScene(sceneMenu));
 
